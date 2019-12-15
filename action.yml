@@ -1,0 +1,21 @@
+name: 'atymic/deployer-php-action'
+description: 'Set up Deployer PHP for use in github actions'
+inputs:
+    ssh-private-key:
+        description: 'SSH key to use during the deployment'
+        required: true
+    ssh-known-hosts:
+        description: 'SSH known hosts file '
+        required: false
+    ssh-disable-host-key-checking:
+        description: 'SSH known hosts file '
+        required: false
+    deloyer-version:
+        description: 'SSH known hosts file '
+        required: false
+runs:
+    using: 'node12'
+    main: 'dist/index.js'
+branding:
+    icon: server
+    color: 'yellow'

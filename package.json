@@ -1,0 +1,49 @@
+{
+  "name": "deployer-php-action",
+  "version": "0.0.1",
+  "author": "atymic @atymic",
+  "bin": {
+    "deployer-php-action": "./bin/run"
+  },
+  "bugs": "https://github.com/atymic/deployer-php-action/issues",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@zeit/ncc": "^0.20.5",
+    "bluebird": "^3.7.2",
+    "execa": "^3.4.0",
+    "listr": "^0.14.3",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@types/node": "^10",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "eslint-config-oclif-typescript": "^0.1",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/atymic/deployer-php-action",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "deployer-php-action"
+  },
+  "repository": "atymic/deployer-php-action",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint **/*.ts --cache",
+    "release": "ncc build src/index.ts -o dist && git add -f dist/",
+    "test": "jest"
+  },
+  "types": "lib/index.d.ts"
+}
