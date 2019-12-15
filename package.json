@@ -12,6 +12,7 @@
     "bluebird": "^3.7.2",
     "execa": "^3.4.0",
     "listr": "^0.14.3",
+    "rxjs-compat": "^6.5.3",
     "tslib": "^1"
   },
   "devDependencies": {
@@ -44,6 +45,5 @@
     "lint": "eslint **/*.ts --cache",
     "release": "ncc build src/index.ts -o dist && git add -f dist/",
     "test": "jest"
-  },
-  "types": "lib/index.d.ts"
+  }
 }

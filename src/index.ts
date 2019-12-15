@@ -1,6 +1,10 @@
 import SetupDeployer from "./SetupDeployer";
 import SetupSsh from "./SetupSsh";
 
+// Force NCC to include required deps
+require('rxjs-compat');
+require("any-observable/register")('rxjs')
+
 const core = require('@actions/core');
 const Listr = require('listr');
 
@@ -21,5 +25,5 @@ const tasks = new Listr([
 
 tasks.run().catch((err: Error) => {
     core.error(err);
-    core.setFailed(err.message)
+    core.setFailed(err)
 });
