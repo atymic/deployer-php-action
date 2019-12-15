@@ -3900,7 +3900,11 @@ const taskz = __webpack_require__(8);
 const tasks = new taskz([
     {
         text: 'Install Deployer',
-        task: () => SetupDeployer_1.default(core.getInput('deployer-version'))
+        task: () => SetupDeployer_1.default({
+            deployerVersion: core.getInput('deployer-version'),
+            deployerRecipesVersion: core.getInput('deployer-recipes-version'),
+            skipDeployerInstall: core.getInput('deployer-skip-install'),
+        })
     },
     {
         text: 'Setup SSH',
@@ -7838,9 +7842,16 @@ module.exports.argument = escapeArgument;
 Object.defineProperty(exports, "__esModule", { value: true });
 const execa = __webpack_require__(955);
 const core = __webpack_require__(470);
-exports.default = async (version) => {
-    const packageName = version ? `deployer/deployer:${version}` : 'deployer/deployer';
-    await execa('composer', ['global', 'require', packageName]);
+exports.default = async (options) => {
+    if (options.skipDeployerInstall)
+        return;
+    const deployerPackage = options.deployerVersion
+        ? `deployer/deployer:${options.deployerVersion}`
+        : 'deployer/deployer';
+    const deployerRecipesPackage = options.deployerRecipesVersion
+        ? `deployer/recipes:${options.deployerRecipesVersion}`
+        : 'deployer/recipes';
+    await execa('composer', ['global', 'require', deployerPackage, deployerRecipesPackage]);
     const installPath = (await execa('composer', ['global', 'config', 'home'])).stdout;
     core.addPath(`${installPath}/vendor/bin`);
 };
@@ -8256,13 +8267,14 @@ exports.default = async (options) => {
     await execa('ssh-agent', ['-a', authSock]);
     core.exportVariable('SSH_AUTH_SOCK', authSock);
     // Fix private key line endings
-    const privateKey = options.privateKey.replace('/\r/g', '');
-    await execa('ssh-add -', { input: privateKey });
+    const privateKey = options.privateKey.replace('/\r/g', '').trim() + '\n';
+    await execa('ssh-add', ['-'], { input: privateKey });
     if (options.disableHostKeyChecking) {
         await fs.appendFileAsync(`/etc/ssh/ssh_config`, `StrictHostKeyChecking no`);
         return;
     }
     await fs.appendFileAsync(`${sshHome}/known_hosts`, options.knownHosts);
+    await fs.chmodAsync(`${sshHome}/known_hosts`, '644');
 };
 
 

@@ -7,7 +7,11 @@ const taskz = require('taskz');
 const tasks = new taskz([
     {
         text: 'Install Deployer',
-        task: () => SetupDeployer(core.getInput('deployer-version'))
+        task: () => SetupDeployer({
+            deployerVersion: core.getInput('deployer-version'),
+            deployerRecipesVersion: core.getInput('deployer-recipes-version'),
+            skipDeployerInstall: core.getInput('deployer-skip-install'),
+        })
     },
     {
         text: 'Setup SSH',
