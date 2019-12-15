@@ -1,4 +1,5 @@
 const execa = require('execa');
+const core = require('@actions/core');
 const promise = require('bluebird');
 const fs = promise.promisifyAll(require('fs'));
 
@@ -11,8 +12,11 @@ interface SshOptions {
 export default async (options: SshOptions) => {
     const home = process.env['HOME'];
     const sshHome = home + '/.ssh';
+    fs.mkdirAsync(sshHome, { recursive: true});
 
-    await execa('ssh-agent', ['-a']);
+    const authSock = '/tmp/ssh-auth.sock';
+    await execa('ssh-agent', ['-a', authSock]);
+    core.exportVariable('SSH_AUTH_SOCK', authSock);
 
     // Fix private key line endings
     const privateKey = options.privateKey.replace('/\r/g', '');
@@ -23,6 +27,5 @@ export default async (options: SshOptions) => {
         return;
     }
 
-    await fs.mkdirAsync(sshHome, {recursive: true});
     await fs.appendFileAsync(`${sshHome}/known_hosts`, options.knownHosts);
 };

@@ -1,7 +1,10 @@
 const execa = require('execa');
-const promise = require('bluebird');
+const core = require('@actions/core');
 
 export default async (version?: string): Promise<void> => {
     const packageName = version ? `deployer/deployer:${version}` : 'deployer/deployer';
-    await execa('composers', ['global', 'require', packageName])
+    await execa('composer', ['global', 'require', packageName]);
+
+    const installPath = (await execa('composer', ['global', 'config', 'home'])).stdout;
+    core.addPath(`${installPath}/vendor/bin`);
 };
