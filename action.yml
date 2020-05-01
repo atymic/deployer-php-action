@@ -10,13 +10,13 @@ inputs:
     ssh-disable-host-key-checking:
         description: 'Turn off host key checking (insecure!)'
         required: false
-    deloyer-version:
+    deployer-version:
         description: 'Version of deployer to install'
         required: false
-    deloyer-recipes-version:
+    deployer-recipes-version:
         description: 'Version of deployer recipes to install'
         required: false
-    deloyer-skip-install:
+    deployer-skip-install:
         description: 'Skip install of deployer (if you are using a locally installed version)'
         required: false
 runs:
