@@ -7,7 +7,7 @@
   },
   "bugs": "https://github.com/atymic/deployer-php-action/issues",
   "dependencies": {
-    "@actions/core": "^1.2.0",
+    "@actions/core": "^1.2.6",
     "@zeit/ncc": "^0.20.5",
     "bluebird": "^3.7.2",
     "execa": "^3.4.0",
