@@ -8,7 +8,7 @@ This action makes it easy to deploy your php services using [Github Actions](htt
 * Starts the `ssh-agent`
 * Loads your deployment SSH private key into the agent
 * Configures `known_hosts` with your provided key (or turns of SSH host key checking)
-* Installs deployer & deployer recipes
+* Installs deployer
 
 ## Using the action
 
