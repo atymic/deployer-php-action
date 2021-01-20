@@ -3964,6 +3964,7 @@ const tasks = new taskz([
         text: 'Install Deployer',
         task: () => SetupDeployer_1.default({
             deployerVersion: core.getInput('deployer-version'),
+            deployerRecipesVersion: core.getInput('deployer-recipes-version'),
             skipDeployerInstall: core.getInput('deployer-skip-install'),
         })
     },
@@ -7965,7 +7966,10 @@ exports.default = async (options) => {
     const deployerPackage = options.deployerVersion
         ? `deployer/deployer:${options.deployerVersion}`
         : 'deployer/deployer';
-    await execa('composer', ['global', 'require', deployerPackage]);
+    const deployerRecipesPackage = options.deployerRecipesVersion
+        ? `deployer/recipes:${options.deployerRecipesVersion}`
+        : 'deployer/recipes';
+    await execa('composer', ['global', 'require', deployerPackage, deployerRecipesPackage]);
     const installPath = (await execa('composer', ['global', 'config', 'home'])).stdout;
     core.addPath(`${installPath}/vendor/bin`);
 };
