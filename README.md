@@ -36,9 +36,9 @@ jobs:
                 with:
                   php-version: 7.3
             - run: composer install
-            # Make sure the @0.1.0 matches the current version of the action
+            # Make sure the @0.3.1 matches the current version of the action
             # You can also use `master`, but it's best to lock to a specific version
-            - uses: atymic/deployer-php-action@0.1.0
+            - uses: atymic/deployer-php-action@0.3.1
               with:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
                   ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
