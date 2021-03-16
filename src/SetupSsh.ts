@@ -43,7 +43,12 @@ export default async (options: SshOptions) => {
   await execa('ssh-add', ['-'], {input: privateKey});
 
   if (options.disableHostKeyChecking) {
-    await fs.appendFileAsync(`/etc/ssh/ssh_config`, `StrictHostKeyChecking no`);
+    const sshConfigFileLocation = `/etc/ssh/ssh_config`;
+    const strictHostKeyCheckingNo = `StrictHostKeyChecking no`;
+    const isStrictHostKeyCheckingNoAlreadyAppended = await fileIncludesString(sshConfigFileLocation, strictHostKeyCheckingNo);
+    if (!isStrictHostKeyCheckingNoAlreadyAppended) {
+      await fs.appendFileAsync(sshConfigFileLocation, os.EOL + strictHostKeyCheckingNo);
+    }
     return;
   }
 
