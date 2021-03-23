@@ -9,6 +9,7 @@ const tasks = new taskz([
         text: 'Install Deployer',
         task: () => SetupDeployer({
             deployerVersion: core.getInput('deployer-version'),
+            deployerRecipesVersion: core.getInput('deployer-recipes-version'),
             skipDeployerInstall: core.getInput('deployer-skip-install'),
         })
     },
