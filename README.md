@@ -19,7 +19,8 @@ For a complete guide on setting Zero Downtime Deployment with Laravel, see: [aty
   This key should start with `-----BEGIN RSA PRIVATE KEY-----`, consist of many lines and ends with `-----END RSA PRIVATE KEY-----`. 
   You can just copy the key as-is from the private key file.  
   _Note: This actions supports both standard keys & pem keys (the action will fix the formatting before loading them into the agent)._
-3. Add another Secret called `SSH_KNOWN_HOSTS`, and paste the key fingerprint(s) of your server. You can find these using the following command `ssh-keyscan rsa -t <server IP>`.  
+3. Add another Secret called `SSH_KNOWN_HOSTS`, and paste the key fingerprint(s) of your server. You can find these using the following command `ssh-keyscan -t rsa <server IP or hostname>`. Make sure you're using the same hostname or IP as you defined in the "host" section of your deploy.php.
+4.  
    **Disabling Host Check Checking (Not Recommended):**  
    You can disable strict host key checking by passing `ssh-disable-host-key-checking: true` to the action.
   
